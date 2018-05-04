@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import addpath
 
 import pytest
 from pocsuite.lib.core.datatype import AttribDict
