@@ -26,18 +26,19 @@ ISSUES_PAGE = "https://github.com/leisurelicht/Pocsuite3/issues"
 GIT_REPOSITORY = "git@github.com:leisurelicht/Pocsuite3.git"
 GIT_PAGE = "https://github.com/leisurelicht/Pocsuite3"
 
-LEGAL_DISCLAIMER = "Usage of pocsuite for attacking targets without prior mutual consent is illegal."
+LEGAL_DISCLAIMER = "Usage of pocsuite for attacking targets without prior \
+    mutual consent is illegal."
 
 BANNER = """\033[01;33m
                               ,--. ,--.
- ,---. ,---. ,---.,---.,--.,--`--,-'  '-.,---.  \033[01;37m{\033[01;{0}m{1}\033[01;37m}\033[01;33m
+ ,---. ,---. ,---.,---.,--.,--`--,-'  '-.,---.  \033[01;37m{\033[01;%dm%s\033[01;37m}\033[01;33m
 | .-. | .-. | .--(  .-'|  ||  ,--'-.  .-| .-. :
 | '-' ' '-' \ `--.-'  `'  ''  |  | |  | \   --.
 |  |-' `---' `---`----' `----'`--' `--'  `----'
-`--'                                            \033[0m\033[4;37m{3}\033[0m
+`--'                                            \033[0m\033[4;37m%s\033[0m
 
-""".format((31 + hash(REVISION) % 6) if REVISION else 30,
-           VERSION_STRING.split('/')[-1], SITE)
+                  """ % ((31 + hash(REVISION) % 6) if REVISION else 30,
+                         VERSION_STRING.split('/')[-1], SITE)
 
 USAGE = "pocsuite [options]"
 
