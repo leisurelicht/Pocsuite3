@@ -7,7 +7,7 @@ from pocsuite.lib.core.datatype import AttribDict
 from pocsuite.lib.core.exception import PocsuiteDataException
 
 
-class TestAttribDict(object):
+class TestAttribDict():
     def setup_class(self):
         self.test1 = AttribDict()
         self.test2 = AttribDict(indict={'a': 1, 'b': 2})
