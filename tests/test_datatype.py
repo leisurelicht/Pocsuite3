@@ -20,9 +20,11 @@ class TestAttribDict():
         assert self.test2._AttribDict__initialised
         assert self.test3._AttribDict__initialised
 
+    # def test_attr_does_not_exists(self):
+    #     with pytest.raises(PocsuiteDataException):
+    #         self.test1.name
     def test_attr_does_not_exists(self):
-        with pytest.raises(PocsuiteDataException):
-            self.test1.name
+        assert self.test1.name is None
 
     def test_attr_create_without_param(self):
         self.test1.name = 'test1'
