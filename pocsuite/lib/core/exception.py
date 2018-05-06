@@ -37,7 +37,7 @@ class PocsuiteThreadException(PocsuiteBaseException):
     pass
 
 
-class PocsuiteValueExceptions(PocsuiteBaseException):
+class PocsuiteValueException(PocsuiteBaseException):
     pass
 
 
