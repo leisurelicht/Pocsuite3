@@ -6,10 +6,10 @@ import sys
 
 from pocsuite.lib.core.enums import CUSTOM_LOGGING
 
-logging.addLevelName(CUSTOM_LOGGING.SYSINFO, '*')
-logging.addLevelName(CUSTOM_LOGGING.SUCCESS, '+')
-logging.addLevelName(CUSTOM_LOGGING.ERROR, '-')
-logging.addLevelName(CUSTOM_LOGGING.WARNING, '!')
+logging.addLevelName(CUSTOM_LOGGING.SYSINFO.value, '*')
+logging.addLevelName(CUSTOM_LOGGING.SUCCESS.value, '+')
+logging.addLevelName(CUSTOM_LOGGING.ERROR.value, '-')
+logging.addLevelName(CUSTOM_LOGGING.WARNING.value, '!')
 
 LOGGER = logging.getLogger('pocsuiteLog')
 
@@ -28,7 +28,8 @@ if disableColor:
     LOGGER_HANDLER = logging.StreamHandler(sys.stdout)
 else:
     try:
-        from pocsuite.thirdparty.ansistrm.ansistrm import ColorizingStreamHandler
+        from pocsuite.thirdparty.ansistrm.ansistrm import \
+            ColorizingStreamHandler
     except ImportError as e:
         LOGGER_HANDLER = logging.StreamHandler(sys.stdout)
     else:
@@ -47,4 +48,4 @@ FORMATTER = logging.Formatter("\r[%(asctime)s] [%(levelname)s] %(message)s",
 
 LOGGER_HANDLER.setFormatter(FORMATTER)
 LOGGER.addHandler(LOGGER_HANDLER)
-LOGGER.setLevel(CUSTOM_LOGGING.WARNING)
+LOGGER.setLevel(CUSTOM_LOGGING.WARNING.value)

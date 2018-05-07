@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from enum import Enum
 
-class OUTPUT_STATUS:
+
+class OUTPUT_STATUS(Enum):
     """
     输出信息码
     """
@@ -10,7 +12,7 @@ class OUTPUT_STATUS:
     SUCCESS = 1
 
 
-class ERROR_TYPE_ID:
+class ERROR_TYPE_ID(Enum):
     """
     输出信息错误码
     """
@@ -28,7 +30,7 @@ class ERROR_TYPE_ID:
     OTHER = 4
 
 
-class CUSTOM_LOGGING:
+class CUSTOM_LOGGING(Enum):
     """
     日志信息
     """
@@ -38,7 +40,7 @@ class CUSTOM_LOGGING:
     SYSINFO = 9
 
 
-class HTTP_HEADER:
+class HTTP_HEADER(Enum):
     ACCEPT = "Accept"
     ACCEPT_CHARSET = "Accept-Charset"
     ACCEPT_ENCODING = "Accept-Encoding"
