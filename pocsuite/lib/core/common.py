@@ -86,3 +86,22 @@ def file_path_parser(path):
     """
 
     return os.path.split(os.path.splitext(path)[0])
+
+
+def parse_target_url(url):
+    """
+    自动给url加协议头
+    只验证了http/https/ws/wss
+    """
+
+    if re.search("^http[s]*://", url, re.I) or \
+            re.search("^ws[s]*://", url, re.I):
+
+        return url
+
+    if re.search(":443[/]*$", url):
+        url = "".join(["https://", url])
+    else:
+        url = "".join(["http://", url])
+
+    return url
