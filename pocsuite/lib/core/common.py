@@ -105,3 +105,16 @@ def parse_target_url(url):
         url = "".join(["http://", url])
 
     return url
+
+
+def del_module(mod_name, paranoid=None):
+    try:
+        mod = sys.modules[mod_name]
+    except KeyError:
+        # raise ValueError(mod_name)
+        pass
+    else:
+        del sys.modules[mod]
+
+    # TODO
+    # paranoid
