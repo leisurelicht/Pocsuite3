@@ -6,6 +6,7 @@ import sys
 import imp
 import marshal
 from pocsuite.lib.core.data import conf
+from pocsuite.lib.core.data import paths
 from pocsuite.lib.core.exception import PocsuiteValueException
 
 
@@ -80,8 +81,7 @@ def file_path_parser(path):
 
     >> file_path_parser("poc_1_0_test.py")
     >> ("", poc_1_0_test)
-
-    >> file_path_parser("poc_1_0_test")
+>> file_path_parser("poc_1_0_test")
     >> ("", poc_1_0_test)
     """
 
@@ -117,4 +117,23 @@ def del_module(mod_name, paranoid=None):
         del sys.modules[mod]
 
     # TODO
+
     # paranoid
+
+
+def set_paths():
+    paths.POCSUITE_DATA_PATH = os.path.join(paths.POCSUITE_ROOT_PATH, "data")
+    paths.USER_AGENTS = os.path.join(paths.POCSUITE_DATA_PATH,
+                                     "user-agents.txt")
+    paths.WEAK_PASS = os.path.join(paths.POCSUITE_DATA_PATH,
+                                   "password-top100.txt")
+    paths.LARGE_WEAK_PASS = os.path.join(paths.POCSUITE_DATA_PATH,
+                                         "password-top100.txt")
+    paths.POCSUITE_HOME_PATH = os.path.expanduser("~")
+
+    _pocsuite = os.path.join(paths.POCSUITE_HOME_PATH, ".pocsuite")
+    _output = os.path.join(_pocsuite, "output")
+    paths.POCSUITE_OUTPUT_PATH = paths.POCSUITE_OUTPUT_PATH or _output
+
+    paths.POCSUITE_RC_PATH = os.path.join(paths.POCSUITE_HOME_PATH,
+                                          ".pocsuiterc")
