@@ -20,11 +20,11 @@ conf = AttribDict()
 # 貌似这个最重要
 kb = AttribDict()
 
-# cmdLineOptionns = AttribDict()
+cmd_line_options = AttribDict()
 
 # registeredPocs = {}
 
-# paths = AttribDict()
+paths = AttribDict()
 
 # defaults = AttribDict(defaults)
 
