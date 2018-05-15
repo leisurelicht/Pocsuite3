@@ -131,8 +131,8 @@ def set_paths():
                                          "password-top100.txt")
     paths.POCSUITE_HOME_PATH = os.path.expanduser("~")
 
-    _pocsuite = os.path.join(paths.POCSUITE_HOME_PATH, ".pocsuite")
-    _output = os.path.join(_pocsuite, "output")
+    paths.POCSUITE_DIR = os.path.join(paths.POCSUITE_HOME_PATH, ".pocsuite")
+    _output = os.path.join(paths.POCSUITE_DIR, "output")
     paths.POCSUITE_OUTPUT_PATH = paths.POCSUITE_OUTPUT_PATH or _output
 
     paths.POCSUITE_RC_PATH = os.path.join(paths.POCSUITE_HOME_PATH,
