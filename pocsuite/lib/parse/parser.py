@@ -144,7 +144,7 @@ def parse_cmd_options():
         help="Extra params (e.g. \"{username: '****', password: '****'}\")",
     )
 
-    optimization = parser.add_argumnet_group("optimization")
+    optimization = parser.add_argument_group("optimization")
 
     optimization.add_argument(
         "--threads",
@@ -182,12 +182,46 @@ def parse_cmd_options():
         help="Check install_requires",
     )
 
-    optimization.add_argumnet(
+    optimization.add_argument(
         "--requires-freeze",
         dest="requires_freeze",
         action="store_true",
         default=False,
         help="Check install_requires after register",
+    )
+
+    x = parser.add_argument_group("Zoomeye or Seebug")
+
+    x.add_argument(
+        "--dork",
+        dest="dork",
+        action="store",
+        default=None,
+        help="Zoomeye dork userd for search.",
+    )
+
+    x.add_argument(
+        "--max-page",
+        dest="max_page",
+        type=int,
+        default=1,
+        help="Max page used in Zoomeye API(10 targets/pages)",
+    )
+
+    x.add_argument(
+        "--search-type",
+        dest="search_type",
+        action="store",
+        default="web, host",
+        help="search type used in Zoomeye api, web or host",
+    )
+
+    x.add_argument(
+        "--vul-keyword",
+        dest="vul_keyword",
+        action="store",
+        default=None,
+        help="Seebug keyword used for search",
     )
 
     args = parser.parse_args()
