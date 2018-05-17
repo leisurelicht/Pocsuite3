@@ -30,9 +30,9 @@ class AttribDict(collections.UserDict):
 
     def __missing__(self, item):
         #  这样外面在用的时候先判断下真假就能确定对象存不存在
-        self.__setitem__(item, None)
+        # self.__setitem__(item, None)
 
-        # raise PocsuiteDataException("unable to access item {}".format(item))
+        raise PocsuiteDataException("unable to access item {}".format(item))
 
     def __getattr__(self, item):
         return self.__getitem__(item)

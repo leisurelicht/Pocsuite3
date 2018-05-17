@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from pocsuite.lib.core.data import kb
+from pocsuite.lib.core.exception import PocsuiteDataException
 
 
 def register_poc(poc_class):
@@ -16,7 +17,11 @@ def register_poc(poc_class):
     print("register")
     module = poc_class.__module__.split('.')[-1]
 
-    if not kb.registered_pocs:
+    # if not kb.registered_pocs:
+    #     kb.registered_pocs = {}
+    try:
+        kb.registered_pocs
+    except PocsuiteDataException:
         kb.registered_pocs = {}
 
     if module in kb.registered_pocs:
