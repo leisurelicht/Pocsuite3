@@ -88,7 +88,7 @@ def parse_cmd_options():
 
     request.add_argument(
         "--random-agent",
-        dest="radom-agent",
+        dest="radom_agent",
         action="store_true",
         default=False,
         help="Use randomly selected HTTP User-Agent header value",
@@ -115,12 +115,14 @@ def parse_cmd_options():
     request.add_argument(
         "--retry",
         dest="retry",
+        type=int,
         help="Delay between two request of one thread",
     )
 
     request.add_argument(
         "--delay",
         dest="delay",
+        type=float,
         help="Delay between two request of one thread",
     )
 
