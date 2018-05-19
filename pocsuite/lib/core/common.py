@@ -5,9 +5,12 @@ import re
 import sys
 import imp
 import marshal
+from termcolor import colored
+from pocsuite.lib.core.log import LOGGER_HANDLER
 from pocsuite.lib.core.data import conf
 from pocsuite.lib.core.data import paths
 from pocsuite.lib.core.exception import PocsuiteValueException
+from pocsuite.lib.core.defaults import BANNER
 
 
 def string_importer(fullname, content):
@@ -137,3 +140,42 @@ def set_paths():
 
     paths.POCSUITE_RC_PATH = os.path.join(paths.POCSUITE_HOME_PATH,
                                           ".pocsuiterc")
+
+
+def banner():
+    banner = BANNER
+
+    if not getattr(LOGGER_HANDLER, "is_tty", False):
+        banner = re.sub("033.+?m", "", banner)
+        print(banner)
+    data_to_stdout(banner)
+
+
+def data_to_stdout(data, bold=False):
+    if conf.quiet:
+        return
+
+    message = ""
+
+    # python3 应该不用判断unicode了
+    message = data
+
+    sys.stdout.write(set_color(message, bold))
+
+    try:
+        sys.stdout.flush()
+    except IOError:
+        pass
+
+    return
+
+
+def set_color(message, bold=False):
+    retval = message
+
+    if message and getattr(LOGGER_HANDLER, "is_tty", False):
+        if bold:
+            retval = colored(
+                message, color=None, on_color=None, attrs=("bold", ))
+
+    return retval

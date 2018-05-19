@@ -26,8 +26,7 @@ ISSUES_PAGE = "https://github.com/leisurelicht/Pocsuite3/issues"
 GIT_REPOSITORY = "git@github.com:leisurelicht/Pocsuite3.git"
 GIT_PAGE = "https://github.com/leisurelicht/Pocsuite3"
 
-LEGAL_DISCLAIMER = "Usage of pocsuite for attacking targets without prior \
-    mutual consent is illegal."
+LEGAL_DISCLAIMER = "Usage of pocsuite for attacking targets without priormutual consent is illegal."
 
 BANNER = """\033[01;33m
                               ,--. ,--.
