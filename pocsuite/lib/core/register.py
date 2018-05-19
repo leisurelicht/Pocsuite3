@@ -14,7 +14,6 @@ def register_poc(poc_class):
     >> kb.register_pocs
     >> ['data_userd_to_test']
     """
-    print("register")
     module = poc_class.__module__.split('.')[-1]
 
     # if not kb.registered_pocs:

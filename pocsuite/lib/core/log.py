@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import sys
 import logging
-import colorlog
+import sys
 
+import colorlog
 from pocsuite.lib.core.enums import CUSTOM_LOGGING
 
 LOGGER = logging.getLogger('pocsuiteLog')

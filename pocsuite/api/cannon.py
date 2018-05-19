@@ -1,22 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import time
 import socket
-from pocsuite.lib.core.data import kb
-from pocsuite.lib.core.data import conf
-from pocsuite.lib.core.data import logger
+import time
+
+from pocsuite.lib.core.common import (del_module, file_path_parser,
+                                      multiple_replace, string_importer)
+from pocsuite.lib.core.data import conf, kb, logger
+from pocsuite.lib.core.defaults import HTTP_DEFAULT_HEADER, POC_IMPORTDICT
 from pocsuite.lib.core.enums import CUSTOM_LOGGING
-from pocsuite.lib.core.defaults import POC_IMPORTDICT
-from pocsuite.lib.core.defaults import HTTP_DEFAULT_HEADER
-
-from pocsuite.lib.core.common import multiple_replace
-from pocsuite.lib.core.common import file_path_parser
-from pocsuite.lib.core.common import string_importer
-from pocsuite.lib.core.common import del_module
-
-from pocsuite.lib.core.exception import PocsuiteDataException
-from pocsuite.lib.core.exception import PocsuiteValueException
+from pocsuite.lib.core.exception import (PocsuiteDataException,
+                                         PocsuiteValueException)
 
 
 class Cannon():
@@ -70,23 +64,17 @@ class Cannon():
             logger.log(CUSTOM_LOGGING.ERROR.value, err_msg)
 
     def run(self):
-        print (kb.registered_pocs)
         poc = kb.registered_pocs[self.module_name]
         result = poc.execute(
             self.target,
             headers=conf.http_headers,
             mode=self.mode,
             params=self.params)
-        output = (
-            self.target,
-            self.poc_name,
-            result.vul_id,
-            result.app_name,
-            result.app_version,
-            (1, "success") if result.is_success() else result.error,
-            time.strftime("%Y-%m-%d %X", time.localtime()),
-            str(result.result)
-        )
+        output = (self.target, self.poc_name, result.vul_id, result.app_name,
+                  result.app_version, (1, "success")
+                  if result.is_success() else result.error,
+                  time.strftime("%Y-%m-%d %X", time.localtime()),
+                  str(result.result))
 
         if self.del_module:
             del_module(self.model_name)

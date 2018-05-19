@@ -3,13 +3,10 @@
 
 from requests import exceptions as reqex
 
-from pocsuite.lib.core.data import conf
-from pocsuite.lib.core.data import logger
-from pocsuite.lib.core.enums import ERROR_TYPE_ID
-from pocsuite.lib.core.enums import CUSTOM_LOGGING
-from pocsuite.lib.core.enums import OUTPUT_STATUS
-from pocsuite.lib.core.common import parse_target_url
 from pocsuite.api.utils import str_to_dict
+from pocsuite.lib.core.common import parse_target_url
+from pocsuite.lib.core.data import conf, logger
+from pocsuite.lib.core.enums import ERROR_TYPE_ID, OUTPUT_STATUS
 
 
 class POCBase:
@@ -53,52 +50,45 @@ class POCBase:
         self.exception = None
 
         try:
-            call = [self._attack, self.verify][self.mode == 'verify']
+            call = [self._attack, self._verify][self.mode == 'verify']
             output = call()
         except NotImplementedError as e:
             self.exception = (ERROR_TYPE_ID.NOTIMPLEMENTEDERROR.value, e)
-            logger.log(CUSTOM_LOGGING.ERROR,
-                       "POC: '{}' not defined '{}' mode.".format(
-                           self.name, self.mode))
+            logger.error(f"POC: '{self.name}' not defined '{self.mode}' mode.")
             output = Output(self)
         except reqex.ConnectTimeout as e:
             self.exception = (ERROR_TYPE_ID.CONNECTTIMEOUT.value, e)
 
             while conf.retry > 0:
-                logger.log(CUSTOM_LOGGING.WARNING.value,
-                           "POC: '{}' timeout, start it over.".foramt(
-                               self.name))
+                logger.warn(f"POC: '{self.name}' timeout, start it over.")
                 try:
                     output = call()
                 except reqex.ConnectTimeout:
-                    logger.log(CUSTOM_LOGGING.WARNING.value,
-                               "POC: '{}' timeout, start it over.".foramt(
-                                   self.name))
+                    logger.warn(f"POC: '{self.name}' timeout, start it over.")
                 conf.retry -= 1
             else:
-                logger.log(CUSTOM_LOGGING.ERROR.value, str(e))
+                logger.error(str(e))
             output = Output(self)
 
         except reqex.HTTPError as e:
             self.exception = (ERROR_TYPE_ID.HTTPERROR.value, e)
-            logger.log(CUSTOM_LOGGING.WARNING,
-                       "POC: '{}' HTTPError occurs, start it over.".format(
-                           self.name))
+            logger.error(
+                f"POC: '{self.name}' HTTPError occurs, start it over.")
             output = Output(self)
 
         except reqex.ConnectionError as e:
             self.exception = (ERROR_TYPE_ID.CONNECTIONERROR.value, e)
-            logger.log(CUSTOM_LOGGING.ERROR, str(e))
+            logger.error(f"ConnectionError {e}")
             output = Output(self)
 
         except reqex.TooManyRedirects as e:
             self.exception = (ERROR_TYPE_ID.TOOMANYREDIRECTS.value, e)
-            logger.log(CUSTOM_LOGGING.ERROR, str(e))
+            logger.error(f"TooManyRedirects {e}")
             output = Output(self)
 
         except Exception as e:
             self.exception = (ERROR_TYPE_ID.OTHER.value, e)
-            logger.log(CUSTOM_LOGGING.ERROR.value, str(e))
+            logger.error(f"Exception {e}")
             output = Output(self)
 
         return output
@@ -137,17 +127,16 @@ class Output:
 
     def show_ersult(self):
         if self.status == OUTPUT_STATUS.SUCCESS.value:
-            info_msg = "poc-{0} '{1}' has already been detected against '{2}'.".format(
-                self.vul_id, self.name, self.url)
-            logger.log(CUSTOM_LOGGING.SUCCESS, info_msg)
+            info_msg = f"poc-{self.vul_id} '{self.name}' has already been "
+            info_msg += f"detected against '{self.url}'."
+            logger.success(info_msg)
 
             for k, v in self.result.items():
                 if isinstance(v, dict):
                     for kk, vv in v.items():
-                        logger.log(CUSTOM_LOGGING.SUCCESS.value,
-                                   "{} : {}".foramt(kk, vv))
+                        logger.success("{kk} : {vv}")
                 else:
-                    logger.log(CUSTOM_LOGGING.SUCCESS, "{} : {}".format(k, v))
+                    logger.success("{k} : {v}")
         else:
-            err_msg = "poc-{} '{}' failed.".format(self.vul_id, self.name)
-            logger.log(CUSTOM_LOGGING.ERROR.value, err_msg)
+            err_msg = f"poc-{self.vul_id} '{self.name}' failed."
+            logger.error(err_msg)
