@@ -14,7 +14,7 @@ VERSION = __version__
 REVISION = get_revision_number()
 FILE_TIME = time.strftime("%Y%m%d", time.gmtime(os.path.getctime(__file__)))
 
-VERSION_STRING = "pocsuite/{0}-{1}".format(VERSION, REVISION or FILE_TIME)
+VERSION_STRING = f"pocsuite/{VERSION}-{REVISION or FILE_TIME}"
 
 IS_WIN = platform.system() == "Windows"
 
@@ -37,8 +37,11 @@ BANNER = """\033[01;33m
 |  |-' `---' `---`----' `----'`--' `--'  `----'
 `--'                                            \033[0m\033[4;37m%s\033[0m
 
-                  """ % ((31 + hash(REVISION) % 6) if REVISION else 30,
-                         VERSION_STRING.split('/')[-1], SITE)
+""" % (
+    (31 + hash(REVISION) % 6) if REVISION else 30,
+    VERSION_STRING.split('/')[-1],
+    SITE,
+)
 
 USAGE = "pocsuite [options]"
 
