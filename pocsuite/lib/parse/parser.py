@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from pocsuite.lib.core.defaults import USAGE
-from pocsuite.lib.core.defaults import VERSION
 import argparse
+
+from pocsuite.lib.core.defaults import USAGE, VERSION
 
 
 def parse_cmd_options():
@@ -45,8 +45,8 @@ def parse_cmd_options():
     target.add_argument(
         "-r",
         dest="poc_file",
-        help="Load POC from a file (e.g. \"_001_cms_sql_inj.py\") \
-        or directory (e.g. \"modules/\")",
+        help="Load POC from a file (e.g. \"_001_cms_sql_inj.py\") or \
+directory (e.g. \"modules/\")",
     )
 
     mode = parser.add_argument_group("mode")
